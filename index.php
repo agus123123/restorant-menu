@@ -3,7 +3,7 @@ require_once 'config/database.php';
 require_once 'includes/header.php';
 
 // Fetch all menus ordered by category and id
-$stmt = $conn->query("SELECT * FROM menus ORDER BY FIELD(category, 'Makanan', 'Minuman', 'Tambahan'), id ASC");
+$stmt = $koneksi->query("SELECT * FROM menus ORDER BY FIELD(category, 'Makanan', 'Minuman', 'Tambahan'), id ASC");
 $menus = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Group menus by category
