@@ -4,7 +4,7 @@ require_once 'includes/header.php';
 
 // Fetch all menus ordered by category and id
 $stmt = $koneksi->query("SELECT * FROM menus ORDER BY FIELD(category, 'Makanan', 'Minuman', 'Tambahan'), id ASC");
-$menus = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$menus = $stmt->fetch_all(MYSQLI_ASSOC);
 
 // Group menus by category
 $grouped_menus = [];
