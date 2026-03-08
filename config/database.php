@@ -1,17 +1,21 @@
 <?php
-// config/database.php
+$host     = getenv("DB_HOST"); // Ganti dengan Host Aiven Anda
+$port     = getenv("DB_PORT"); // Port Aiven
+$user     = getenv("DB_USER"); // Username Aiven
+$password = getenv("DB_PASSWORD"); // Password Aiven
+$dbname   = getenv("DB_NAME"); // Database Aiven
 
-$host = 'localhost';
-$db_name = 'catering_db';
-$username = 'root';
-$password = '';
+// Inisialisasi koneksi MySQLi
+$koneksi = mysqli_init();
 
-try {
-    $conn = new PDO("mysql:host={$host};dbname={$db_name}", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    // echo "Connected successfully"; 
-} catch(PDOException $e) {
-    echo "Connection failed: " . $e->getMessage();
-    die();
+// Memaksa penggunaan SSL (Wajib untuk Aiven)
+mysqli_ssl_set($koneksi, NULL, NULL, NULL, NULL, NULL);
+
+// Mengeksekusi koneksi remote
+mysqli_real_connect($koneksi, $host, $user, $password, $dbname, $port, NULL, MYSQLI_CLIENT_SSL);
+
+// Cek koneksi
+if (!$koneksi) {
+    die("Koneksi Database Gagal: " . mysqli_connect_error());
 }
 ?>
